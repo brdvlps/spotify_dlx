@@ -75,7 +75,7 @@ def set_music_thumbnail(filename: str, image_url: str):
     tags.save()
 
 
-def write_wav(filename: str, stream: Any):
+def write_audio(filename: str, stream: Any):
     """Save audio as wav file."""
     with open(filename, "wb") as file:
         #  Download the entire track.

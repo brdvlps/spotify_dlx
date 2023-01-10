@@ -50,7 +50,7 @@ def _main():
     parser.add_argument("--disable-skip", default=False, action="store_true")
     parser.add_argument("--liked", default=False, action="store_true")
     parser.add_argument("--playlist", default=False, action="store_true")
-    parser.add_argument("--format", default="mp3", choices=["mp3", "wav"])
+    parser.add_argument("--format", default="mp3", choices=["mp3", "wav", "ogg"])
     parser.add_argument("--limit", default=10, type=int)
     args = parser.parse_args()
 

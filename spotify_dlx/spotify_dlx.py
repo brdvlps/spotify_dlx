@@ -22,7 +22,7 @@ from spotify_dlx.utils import (
     set_audio_tags,
     set_music_thumbnail,
     verify_url_pattern,
-    write_wav,
+    write_audio,
 )
 
 
@@ -50,7 +50,7 @@ class SpotifyDLXClient(object):
         self.disable_skip = disable_skip
 
         # Verify the format.
-        if format.lower() not in ["wav", "mp3"]:
+        if format.lower() not in ["wav", "mp3", "ogg"]:
             raise ValueError(f"{format} is currently not supported. Select from wav or mp3")
         self.format = format
 
@@ -79,7 +79,7 @@ class SpotifyDLXClient(object):
                 self.session = Session.Builder().user_pass(username, password).create()
 
             # Setup token and audio quality.
-            self.token = self.session.tokens().get("user-read-email")
+            self.token = self.session.tokens().get_token("user-read-email", "user-library-read").access_token
 
             # Verify audio quality by membership
             is_premium = self.session.get_user_attribute("type") == "premium"
@@ -89,7 +89,7 @@ class SpotifyDLXClient(object):
         except RuntimeError:
             pass
 
-        except:
+        except Exception as exc:
             print("[red]Failed to login. Check if your username and password is correct.[/red]")
             raise Exception("Credential Error.")
 
@@ -207,10 +207,9 @@ class SpotifyDLXClient(object):
             else:
                 if not os.path.isdir(base_dir):
                     os.makedirs(base_dir)
-                write_wav(filename, stream)
+                write_audio(filename, stream)
 
-                # If target format is not wav, convert data with meta info.
-                if self.format != "wav":
+                if self.format not in ["wav", "ogg"]:
 
                     def _add_tag():
                         """Add tag if converting is completed."""

@@ -5,7 +5,7 @@ from .utils import (
     set_audio_tags,
     set_music_thumbnail,
     verify_url_pattern,
-    write_wav,
+    write_audio,
 )
 
 __all__ = [
@@ -15,5 +15,5 @@ __all__ = [
     "verify_url_pattern",
     "set_music_thumbnail",
     "set_audio_tags",
-    "write_wav",
+    "write_audio",
 ]
